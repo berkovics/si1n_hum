@@ -23,6 +23,20 @@ public class Database {
         });
     }
 
+    public Connection connectDb() throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        String url = "jdbc:mariadb://localhost:3306/hum";
+        Class.forName("org.mariadb.jdbc.Driver");
+
+        con = DriverManager.getConnection(url, "hum", "titok");
+        System.out.println("Működik");
+        return con;
+    }
+
+    public void closeDb(Connection con) throws SQLException {
+        con.close();
+    }
+
     // Hibakezelő metódus
     public void insertEmployee(Employee emp) {
         try {
@@ -39,13 +53,8 @@ public class Database {
     // Iparikód (hasznos kód)
     public void tryInsertEmployee(Employee emp)
             throws SQLException, ClassNotFoundException {
+        Connection con = this.connectDb();
 
-        Connection con = null;
-        String url = "jdbc:mariadb://localhost:3306/hum";
-        Class.forName("org.mariadb.jdbc.Driver");
-
-        con = DriverManager.getConnection(url, "hum", "titok");
-        System.out.println("Működik");
         String sql = "insert into employees" +
                 "(name, city, salary) values" +
                 "(?, ?, ?)";
@@ -56,7 +65,7 @@ public class Database {
         pstmt.setDouble(3, emp.salary);
         System.out.println(pstmt.toString());
         pstmt.execute();
-        con.close();
+        this.closeDb(con); // con.close();
     }
 
     public ArrayList<Employee> getEmployee() {
@@ -74,17 +83,13 @@ public class Database {
             throws ClassNotFoundException, SQLException {
         ArrayList<Employee> empList = new ArrayList<>();
 
-        Connection con = null;
-        String url = "jdbc:mariadb://localhost:3306/hum";
-        Class.forName("org.mariadb.jdbc.Driver");
-
-        con = DriverManager.getConnection(url, "hum", "titok");
-        System.out.println("Működik");
+        Connection con = this.connectDb();
 
         String sql = "select * from employees";
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
         empList = convertResToList(rs);
+        closeDb(con);
         return empList;
     }
 
