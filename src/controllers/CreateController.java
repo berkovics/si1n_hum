@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.Vector;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -37,6 +39,11 @@ public class CreateController {
         Double salary = Double.parseDouble(SalaryStr);
         Employee emp = new Employee(NameStr, CityStr, salary);
         new Database().insertEmployee(emp);
+        Vector<String> empStr = new Vector<>();
+        // TODO: Az insertEmployee() nem adja vissza
+        // az id-t. Ha meg van akkor feltölthető a
+        // Vector
+        this.mainFrame.getModel().addRow(empStr);
         JOptionPane.showMessageDialog(createFrame, "Az hozzáadás megtörtént");
     }
 }
