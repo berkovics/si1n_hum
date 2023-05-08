@@ -69,12 +69,21 @@ public class Database {
         String sql = "insert into employees" +
                 "(name, city, salary) values" +
                 "(?, ?, ?)";
+        // PreparedStatement pstmt = con.prepareStatement(sql,
+        // Statement.RETURN_GENERATED_KEYS);
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.setString(1, emp.name);
         pstmt.setString(2, emp.city);
         pstmt.setDouble(3, emp.salary);
         System.out.println(pstmt.toString());
-        pstmt.execute();
+        pstmt.executeUpdate();
+        ResultSet rs = pstmt.getGeneratedKeys();
+
+        if (rs.next()) {
+            int id = rs.getInt(1);
+            System.out.println(id);
+        }
+
         this.closeDb(con); // con.close();
     }
 

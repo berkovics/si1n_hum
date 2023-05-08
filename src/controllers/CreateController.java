@@ -3,8 +3,9 @@ package controllers;
 import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 
+import models.CreateModel;
 import models.Database;
 import models.Employee;
 import views.CreateFrame;
@@ -13,10 +14,12 @@ import views.MainFrame;
 public class CreateController {
     CreateFrame createFrame;
     MainFrame mainFrame;
+    CreateModel createModel;
 
     public CreateController(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         this.createFrame = new CreateFrame(this.mainFrame);
+        this.createModel = new CreateModel();
         this.handleEvent();
     }
 
@@ -27,8 +30,11 @@ public class CreateController {
     private void handleEvent() {
         JButton addButton = this.createFrame.getAddButton();
         addButton.addActionListener(e -> {
-            startAdding();
+            startOperating();
         });
+    }
+
+    private void startOperating() {
     }
 
     private void startAdding() {
@@ -39,11 +45,14 @@ public class CreateController {
         Double salary = Double.parseDouble(SalaryStr);
         Employee emp = new Employee(NameStr, CityStr, salary);
         new Database().insertEmployee(emp);
+
         Vector<String> empStr = new Vector<>();
-        // TODO: Az insertEmployee() nem adja vissza
-        // az id-t. Ha meg van akkor feltölthető a
-        // Vector
+        // empStr.add(id.toString());
+        empStr.add(NameStr);
+        empStr.add(CityStr);
+        empStr.add(SalaryStr);
         this.mainFrame.getModel().addRow(empStr);
-        JOptionPane.showMessageDialog(createFrame, "Az hozzáadás megtörtént");
+        this.createFrame.setVisible(false);
+        // JOptionPane.showMessageDialog(createFrame, "Az hozzáadás megtörtént");
     }
 }

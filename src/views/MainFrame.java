@@ -22,6 +22,7 @@ public class MainFrame extends JFrame {
     JPanel buttonPanel;
     JButton addButton;
     JButton delButton;
+    JButton editButton;
 
     public MainFrame() {
         this.initComponent();
@@ -37,6 +38,7 @@ public class MainFrame extends JFrame {
         this.buttonPanel = new JPanel();
         this.addButton = new JButton("Hozzáad");
         this.delButton = new JButton("Töröl");
+        this.editButton = new JButton("Szerkezst");
     }
 
     private void setComponent() {
@@ -50,6 +52,7 @@ public class MainFrame extends JFrame {
         this.buttonPanel.setLayout(new BoxLayout(this.buttonPanel, BoxLayout.LINE_AXIS));
         this.buttonPanel.add(this.addButton);
         this.buttonPanel.add(this.delButton);
+        this.buttonPanel.add(this.editButton);
 
         ArrayList<Employee> empList = this.db.getEmployee();
 
@@ -86,5 +89,9 @@ public class MainFrame extends JFrame {
 
     public DefaultTableModel getModel() {
         return this.model;
+    }
+
+    public JButton getEditButton() {
+        return editButton;
     }
 }

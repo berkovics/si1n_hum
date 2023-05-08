@@ -5,6 +5,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import models.Employee;
+
 public class CreateFrame extends JDialog {
     InputPanel idPanel;
     InputPanel namePanel;
@@ -39,6 +41,14 @@ public class CreateFrame extends JDialog {
 
     public JButton getAddButton() {
         return addButton;
+    }
+
+    public void setEmployee(Employee emp) {
+        System.out.println("id setEmployeeban: " + emp.getId());
+        this.idPanel.setValue(emp.getId().toString());
+        this.namePanel.setValue(emp.getName());
+        this.cityPanel.setValue(emp.getCity());
+        this.salaryPanel.setValue(emp.getSalary().toString());
     }
 
     public InputPanel getIdPanel() {
